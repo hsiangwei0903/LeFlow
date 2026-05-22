@@ -1,0 +1,12 @@
+_target_: latent_planner.LearnedLatentPathSolver
+checkpoint: ${policy}
+batch_size: 1
+num_samples: 64
+flow_steps: 16
+score_mode: rollout_goal
+goal_weight: 1.0
+consistency_weight: 0.0
+smoothness_weight: 0.0
+device: "cuda"
+seed: ${seed}
+history_size: 3

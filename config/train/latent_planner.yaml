@@ -1,0 +1,86 @@
+defaults:
+  - _self_
+
+lewm_checkpoint: ???
+output_model_name: latent_planner
+subdir: latent_planner/${now:%Y-%m-%d_%H-%M-%S}
+
+seed: 3072
+device: cuda
+img_size: 224
+train_split: 0.9
+epochs: 50
+log_interval: 50
+val_batches: 20
+max_train_batches: null
+grad_clip_norm: 1.0
+lewm_history_size: 3
+
+episode_split:
+  enabled: False
+  train_fraction: 0.8
+  seed: ${seed}
+  split_file: null
+
+wandb:
+  enabled: True
+  project: lewm-latent-planner
+  entity: null
+  name: ${output_model_name}_${planner.horizon}
+  id: null
+  resume: allow
+  mode: online
+  log_model: False
+
+loader:
+  batch_size: 128
+  num_workers: 6
+  persistent_workers: True
+  prefetch_factor: 3
+  pin_memory: True
+
+data:
+  dataset:
+    name: tworoom
+    frameskip: ${planner.action_block}
+    num_steps: ${eval:'${planner.horizon} + 1'}
+    keys_to_load:
+      - pixels
+      - action
+      - proprio
+    keys_to_cache:
+      - action
+      - proprio
+
+planner:
+  horizon: 5
+  max_horizon: 20
+  action_block: 5
+  num_samples_eval: 64
+  flow_steps_eval: 16
+
+flow:
+  hidden_dim: 512
+  depth: 4
+  time_dim: 64
+  dropout: 0.0
+
+inverse_dynamics:
+  hidden_dim: 512
+  depth: 3
+  dropout: 0.0
+
+loss:
+  flow:
+    weight: 1.0
+  inverse:
+    weight: 1.0
+  consistency:
+    weight: 0.1
+    detach_inverse: False
+  smoothness:
+    weight: 0.0
+
+optimizer:
+  lr: 1e-4
+  weight_decay: 1e-4
