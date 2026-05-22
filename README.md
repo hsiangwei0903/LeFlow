@@ -5,23 +5,12 @@ LeFlow adds a learned goal-conditioned planner on top of a frozen
 test-time CEM over actions, LeFlow first generates a latent future path and then
 uses inverse dynamics to convert latent transitions into action chunks.
 
-```text
-current observation -> frozen LeWM encoder -> z_start
-goal observation    -> frozen LeWM encoder -> z_goal
-
-(z_start, z_goal) -> latent path flow planner -> z_0 ... z_H
-(z_t, z_{t+1})    -> inverse dynamics       -> action chunk a_t
-actions           -> frozen LeWM rollout    -> rerank by final latent-goal distance
-```
-
 This repository builds on the original LeWorldModel codebase, plus
 `stable-worldmodel` for datasets, environments, policies, and evaluation.
 
 ## Checkpoints
 
-Main H=5 LeFlow checkpoints are hosted on Hugging Face:
-
-[`hsiangwei0903/LeFlow`](https://huggingface.co/hsiangwei0903/LeFlow)
+Main H=5 LeFlow checkpoints are hosted on [`Hugging Face`](https://huggingface.co/hsiangwei0903/LeFlow)
 
 The repo contains:
 
@@ -39,20 +28,6 @@ The LeFlow checkpoint stores only lightweight planner state:
 - architecture metadata
 - reference to the frozen LeWM checkpoint
 
-It does not pickle or duplicate the full frozen LeWM object.
-
-If the model repo is private, log in first:
-
-```bash
-hf auth login
-```
-
-Download the checkpoints:
-
-```bash
-export STABLEWM_HOME=/path/to/stable-wm
-hf download hsiangwei0903/LeFlow --local-dir "$STABLEWM_HOME/leflow"
-```
 
 ## Setup
 
