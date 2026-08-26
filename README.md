@@ -260,4 +260,14 @@ This code builds on LeWorldModel:
   journal={arXiv preprint},
   year={2026}
 }
+
+@misc{huang2026leflowgenerativelatentflow,
+      title={LeFlow: Generative Latent Flow Planning for World Models}, 
+      author={Hsiang-Wei Huang and Jianxu Shangguan and Junbin Lu and Jenq-Neng Hwang},
+      year={2026},
+      eprint={2608.24855},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2608.24855}, 
+}
 ```
